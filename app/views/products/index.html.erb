@@ -1,0 +1,34 @@
+<%= turbo_frame_tag 'home' do %>
+
+    <h2>Productos</h2>
+
+    <%= form_with url: products_path, method: :get do |form| %>
+
+        <%= form.text_field :title, placeholder: 'Buscar por nombre', 
+        onChange: 'this.form.requestSubmit()', value: params[:title] %>
+
+        <%= form.number_field :min_price, placeholder: 'Precio minimo', 
+        onChange: 'this.form.requestSubmit()', value: params[:min_price] %>
+
+        <%= form.number_field :max_price, placeholder: 'Precio maximo', 
+        onChange: 'this.form.requestSubmit()', value: params[:max_price] %>
+
+        <%= form.select :order_by, 
+        options_for_select([["Recientes","newest"],["Más caros", "expensive"],["Más barato","cheapest"]],
+        params[:order_by]), {},{onChange: 'this.form.requestSubmit()'} %>
+    
+    <% end %>    
+
+    <%= link_to 'Todos', products_path %>
+
+    <%= render partial: 'category', collection: @categories %>
+
+    <<%= turbo_frame_tag "products-#{@pagy.page}", class: 'products' do %>
+
+        <%= render partial: 'product', collection: @products %>
+
+        <%= turbo_frame_tag "products-#{@pagy.next}",class: 'products', 
+        src: pagy_url_for(@pagy, @pagy.next), loading: :lazy if @pagy.next  %>
+        
+    <% end %>
+<% end %>

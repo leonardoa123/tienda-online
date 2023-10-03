@@ -1,0 +1,7 @@
+    <%= link_to product_path(product), class: 'product', 'data-turbo-frame': '_top' do %>
+     
+      <h2><%= product.title %></h2>
+      <%= image_tag product.photo, width: 200 if product.photo.attached? %> 
+      <span><%= product.price %>$</span>
+
+    <% end %>
