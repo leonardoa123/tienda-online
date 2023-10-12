@@ -1,4 +1,5 @@
 <%= link_to products_path do %>
+    <%= Current.user.inspect %>
     <h1>Sold<h1>
 <% end %>
 <%= link_to 'Crear producto', new_product_path %>
