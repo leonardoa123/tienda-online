@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
     validates :password, length: { in:6..20 }
 
+    has_many :products, dependent: :destroy
+
     before_save :downcase_attributes
 
     private
